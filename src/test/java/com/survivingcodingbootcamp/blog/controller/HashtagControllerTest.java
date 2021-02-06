@@ -1,7 +1,6 @@
 package com.survivingcodingbootcamp.blog.controller;
 
 import com.survivingcodingbootcamp.blog.model.Topic;
-import com.survivingcodingbootcamp.blog.storage.TopicStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,16 +15,16 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class HomeControllerTest {
+public class HashtagControllerTest {
 
-    private HomeController underTest;
+    private HashtagController underTest;
     private Model model;
     private TopicStorage topicStorage;
 
     @BeforeEach
     void setUp() {
         topicStorage = mock(TopicStorage.class);
-        underTest = new HomeController(topicStorage);
+        underTest = new HashtagController(topicStorage);
         model = mock(Model.class);
     }
 
