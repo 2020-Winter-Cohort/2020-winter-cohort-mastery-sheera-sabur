@@ -1,55 +1,41 @@
 package com.survivingcodingbootcamp.blog.controller;
 
-import com.survivingcodingbootcamp.blog.model.Comment;
+import com.survivingcodingbootcamp.blog.model.Hashtag;
 import com.survivingcodingbootcamp.blog.model.Post;
-import com.survivingcodingbootcamp.blog.storage.repository.CommentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.survivingcodingbootcamp.blog.model.Topic;
+import com.survivingcodingbootcamp.blog.storage.PostStorage;
+import com.survivingcodingbootcamp.blog.storage.TopicStorage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
     private PostStorage postStorage;
-    @Autowired
-    private HashtagStorage hashtagStorage;
-    @Autowired
     private TopicStorage topicStorage;
-    @Autowired
-    private CommentRepository commentRepository;
 
-    public PostController(PostStorage postStorage) {
-
+    public PostController(PostStorage postStorage, TopicStorage topicStorage) {
         this.postStorage = postStorage;
-
+        this.topicStorage = topicStorage;
     }
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public String displaySinglePost(@PathVariable long id, Model model) {
         model.addAttribute("post", postStorage.retrievePostById(id));
-        model.addAttribute("hashtags",postStorage.retrievePostById(id).getHashtags());
-        model.addAttribute("commentList",postStorage.retrievePostById(id).getComments());
         return "single-post-template";
     }
 
-    @PostMapping("/addPost/{topicId}")
-    public String addNewPost(Model model,@PathVariable Long topicId, @RequestParam String newTitle,@RequestParam String newAuthor,@RequestParam String newContent){
-        Post newPost = new Post(newTitle,newAuthor,topicStorage.retrieveSingleTopic(topicId),newContent);
-        newPost.setDate(new Date());
-        postStorage.save(newPost);
-        return "redirect:/topics/{topicId}";
+    @PostMapping("/addPost")
+    public String addPostToTopic(@RequestParam String title, @RequestParam String topicId, @RequestParam String author, @RequestParam String content) {
+        Long id = Long.parseLong(topicId);
+        Topic addTopic = topicStorage.retrieveSingleTopic(id);
+        Post addedPost = new Post(title,addTopic,author,content);
+        postStorage.save(addedPost);
+        topicStorage.addPostToTopic(id, addedPost);
+        return "redirect:/";
     }
 
-    @RequestMapping("/addcomment/{id}")
-    public String addNewComment(@PathVariable Long id,@RequestParam String newComment,Model model){
-        Comment addComment = new Comment(newComment,postStorage.retrievePostById(id));
-        commentRepository.save(addComment);
-//    model.addAttribute("commentList",postStorage.retrievePostById(id).getComments());
-        System.out.println(postStorage.retrievePostById(id).getComments());
-        return "redirect:/posts/{id}";
 
-    }
+
 
 }

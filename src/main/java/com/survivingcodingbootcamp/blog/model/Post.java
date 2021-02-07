@@ -2,7 +2,6 @@ package com.survivingcodingbootcamp.blog.model;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,6 +24,9 @@ public class Post {
     }
 
     public Post(String title, Topic topic, String author, String content, String hashtag) {
+    }
+
+    public Post(String test_post, Topic testTopic, String s) {
     }
 
     public Collection<Hashtag> getHashtags() {
@@ -100,12 +102,5 @@ public class Post {
     }
     public void addPostToTopic(Post addedPost){
         topic.addPostToTopic(addedPost);
-    }
-
-    public Object getComments() {
-        return "";
-    }
-
-    public void setDate(Date date) {
     }
 }

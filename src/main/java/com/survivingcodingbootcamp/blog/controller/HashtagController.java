@@ -1,6 +1,8 @@
 package com.survivingcodingbootcamp.blog.controller;
 
 import com.survivingcodingbootcamp.blog.model.Hashtag;
+import com.survivingcodingbootcamp.blog.storage.HashtagStorage;
+import com.survivingcodingbootcamp.blog.storage.PostStorage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

@@ -8,44 +8,46 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TopicControllerTest {
+public class HomeControllerTest {
 
-    private TopicController underTest;
-    private TopicStorage topicStorage;
+    private HomeController underTest;
     private Model model;
-    private Topic testTopic;
+    private TopicStorage topicStorage;
 
     @BeforeEach
     void setUp() {
         topicStorage = mock(TopicStorage.class);
-        underTest = new TopicController(topicStorage);
+        underTest = new HomeController(topicStorage);
         model = mock(Model.class);
-        testTopic = new Topic("Test Topic");
-        when(topicStorage.retrieveSingleTopic(1L)).thenReturn(testTopic);
-
     }
 
     @Test
-    public void displaySingleTopicShouldReturnSingleTopicTemplateName() {
-        String templateName = underTest.displaySingleTopic(1L, model);
-        assertThat(templateName).isEqualTo("single-topic-template");
+    public void displayHomePageReturnsHomeViewTemplate() {
+        String templateName = underTest.displayHomePage(model);
+        assertThat(templateName).isEqualTo("home-template");
     }
 
     @Test
-    public void displaySingleTopicShouldRetrieveSingleTopicFromStorageAndAddItToModel() {
-        underTest.displaySingleTopic(1L, model);
-        verify(model).addAttribute("topic", testTopic);
+    public void displayHomePageInteractsWithTheTopicStorageRetrievingAllTopicsAndAddingThemToTheModel() {
+        Collection<Topic> retrievedTopics = Collections.EMPTY_LIST;
+        when(topicStorage.retrieveAllTopics()).thenReturn(retrievedTopics);
+        underTest.displayHomePage(model);
+        verify(topicStorage).retrieveAllTopics();
+        verify(model).addAttribute("topics", retrievedTopics);
     }
 
     @Test
-    public void displaySingleTopicIsMappedForTheSingleTopicEndpoint() throws Exception {
+    public void displayHomePageInteractsIsMappedForTheHomeEndpoint() throws Exception {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(underTest).build();
-        mockMvc.perform(get("/topics/1"))
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk());
     }
 }

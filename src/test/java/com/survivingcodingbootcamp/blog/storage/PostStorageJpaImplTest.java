@@ -34,7 +34,7 @@ public class PostStorageJpaImplTest {
     @Test
     public void retrievePostByIdShouldFindPostFromRepo(){
         when(postRepo.findById(1L)).thenReturn(Optional.of(testPost));
-        Post retrievedPost = underTest.retrievePostById(1L);
+        Post retrievedPost = (Post) underTest.retrievePostById(1L);
         assertThat(retrievedPost).isEqualTo(testPost);
     }
 
