@@ -37,7 +37,7 @@ html{
 }
 
 a{
-    color: var(--dark-highlight); 
+    color: var(--dark-highlight);
 }
 a:hover{
     color: var(--light-highlight);
