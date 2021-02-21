@@ -1,6 +1,8 @@
 package com.survivingcodingbootcamp.blog.controller;
 
 import com.survivingcodingbootcamp.blog.model.Topic;
+import com.survivingcodingbootcamp.blog.storage.HashtagStorage;
+import com.survivingcodingbootcamp.blog.storage.PostStorage;
 import com.survivingcodingbootcamp.blog.storage.TopicStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,8 @@ public class TopicControllerTest {
     private TopicStorage topicStorage;
     private Model model;
     private Topic testTopic;
+    private HashtagStorage hashtagStorage;
+    private PostStorage postStorage;
 
     @BeforeEach
     void setUp() {

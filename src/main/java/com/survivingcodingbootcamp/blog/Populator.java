@@ -60,11 +60,11 @@ public class Populator implements CommandLineRunner {
                 "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id " + "est laborum.", "Sample Author", hashtag2);
 
         postStorage.save(post3);
-        Topic topic2 = new Topic("Battling Imposter Syndrome");
+        Topic topic2 = new Topic("Topic 1");
         topicStorage.save(topic2);
-        Topic topic3 = new Topic("Introductory Java");
+        Topic topic3 = new Topic("Topic 2");
         topicStorage.save(topic3);
-        Topic topic4 = new Topic("Object Oriented Programming and You");
+        Topic topic4 = new Topic("Topic 3");
         topicStorage.save(topic4);}
 //
 //        hashtagStorage.saveHashtag(new Hashtag("#VeryInsightful", post1, post2));

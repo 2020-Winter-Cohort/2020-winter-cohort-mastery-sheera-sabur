@@ -6,7 +6,7 @@ import com.survivingcodingbootcamp.blog.model.Post;
 public interface PostStorage {
     Iterable<Post> retrieveAllPosts();
 
-    Object retrievePostById(long l);
+    Post retrievePostById(long l);
 
     void save(Post postToAdd);
 
